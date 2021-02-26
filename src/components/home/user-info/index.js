@@ -1,12 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const UserInfo = ({ userInfo }) => {
-  const { username, repos, followers, following } = userInfo;
+  const { username, login, photo, repos, followers, following } = userInfo;
   return (
     <div className="user-info">
-      <img src="https://avatars.githubusercontent.com/u/41842156?v=4" />
+      <img src={photo} alt="Foto do usuário" />
       <h2 className="username">
-        <a href="https://github.com/thaisdev">{username}</a>
+        <a href={`https://github.com/${login}`}>{username}</a>
       </h2>
       <ul className="repos-info">
         <li>{`Repositórios: ${repos}`}</li>
@@ -15,6 +16,17 @@ const UserInfo = ({ userInfo }) => {
       </ul>
     </div>
   );
+};
+
+UserInfo.propTypes = {
+  userInfo: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    login: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
+    repos: PropTypes.number.isRequired,
+    followers: PropTypes.number.isRequired,
+    following: PropTypes.number.isRequired,
+  }),
 };
 
 export default UserInfo;

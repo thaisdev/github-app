@@ -6,10 +6,10 @@ import Search from "../search";
 import UserInfo from "../user-info";
 import "./content.css";
 
-const Content = ({ userInfo, repos, starred }) => {
+const Content = ({ userInfo, repos, starred, handleSearch }) => {
   return (
     <div className="home">
-      <Search />
+      <Search handleSearch={handleSearch} />
       {!!userInfo && <UserInfo userInfo={userInfo} />}
       {!!userInfo && <Actions />}
 
@@ -25,7 +25,7 @@ const Content = ({ userInfo, repos, starred }) => {
 };
 
 Content.propTypes = {
-  userInfo: PropTypes.any.isRequired,
+  userInfo: PropTypes.object,
   repos: PropTypes.array.isRequired,
   starred: PropTypes.array.isRequired,
 };
