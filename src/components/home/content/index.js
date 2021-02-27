@@ -6,12 +6,19 @@ import Search from "../search";
 import UserInfo from "../user-info";
 import "./content.css";
 
-const Content = ({ userInfo, repos, starred, handleSearch }) => {
+const Content = ({
+  userInfo,
+  repos,
+  starred,
+  handleSearch,
+  getRepos,
+  getStarred,
+}) => {
   return (
     <div className="home">
       <Search handleSearch={handleSearch} />
       {!!userInfo && <UserInfo userInfo={userInfo} />}
-      {!!userInfo && <Actions />}
+      {!!userInfo && <Actions getRepos={getRepos} getStarred={getStarred} />}
 
       {!!repos.length && (
         <Repos className="repos" title="Repositórios:" repos={repos} />

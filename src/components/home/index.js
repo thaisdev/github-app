@@ -2,6 +2,8 @@ import { Component } from "react";
 import ajax from "@fdaciuk/ajax";
 import Content from "./content";
 
+const GITHUBAPIURL = "https://api.github.com/users";
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -18,9 +20,8 @@ class Home extends Component {
     if (key === ENTER) {
       const { value } = e.target;
       ajax()
-        .get(`https://api.github.com/users/${value}`)
+        .get(`${GITHUBAPIURL}/${value}`)
         .then((result) => {
-          console.log(result);
           this.setState({
             userInfo: {
               username: result.name || "Sem nome",
@@ -30,9 +31,26 @@ class Home extends Component {
               followers: result.followers,
               following: result.following,
             },
+            repos: [],
+            starred: [],
           });
         });
     }
+  };
+
+  handleGetRepos = (type) => {
+    const { userInfo } = this.state;
+    ajax()
+      .get(`${GITHUBAPIURL}/${userInfo.login}/${type}`)
+      .then((result) => {
+        this.setState({
+          [type]: result.map((repo) => ({
+            id: repo.id,
+            name: repo.name,
+            link: repo.html_url,
+          })),
+        });
+      });
   };
 
   render() {
@@ -43,6 +61,8 @@ class Home extends Component {
         repos={repos}
         starred={starred}
         handleSearch={this.handleSearch}
+        getRepos={() => this.handleGetRepos("repos")}
+        getStarred={() => this.handleGetRepos("starred")}
       />
     );
   }
