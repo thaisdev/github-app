@@ -11,14 +11,15 @@ class Home extends Component {
       userInfo: null,
       repos: [],
       starred: [],
+      isFetching: false,
     };
   }
 
-  handleSearch = (e) => {
-    const { key } = e;
+  handleSearch = ({ key, target }) => {
     const ENTER = "Enter";
     if (key === ENTER) {
-      const { value } = e.target;
+      const { value } = target;
+      this.setState({ isFetching: true });
       ajax()
         .get(`${GITHUBAPIURL}/${value}`)
         .then((result) => {
@@ -34,6 +35,9 @@ class Home extends Component {
             repos: [],
             starred: [],
           });
+        })
+        .always(() => {
+          this.setState({ isFetching: false });
         });
     }
   };
@@ -54,7 +58,7 @@ class Home extends Component {
   };
 
   render() {
-    const { userInfo, repos, starred } = this.state;
+    const { userInfo, repos, starred, isFetching } = this.state;
     return (
       <Content
         userInfo={userInfo}
@@ -63,6 +67,7 @@ class Home extends Component {
         handleSearch={this.handleSearch}
         getRepos={() => this.handleGetRepos("repos")}
         getStarred={() => this.handleGetRepos("starred")}
+        isFetching={isFetching}
       />
     );
   }

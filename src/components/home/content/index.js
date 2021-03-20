@@ -13,19 +13,28 @@ const Content = ({
   handleSearch,
   getRepos,
   getStarred,
+  isFetching,
 }) => {
   return (
     <div className="home">
-      <Search handleSearch={handleSearch} />
-      {!!userInfo && <UserInfo userInfo={userInfo} />}
-      {!!userInfo && <Actions getRepos={getRepos} getStarred={getStarred} />}
+      <Search handleSearch={handleSearch} isDisabled={isFetching} />
+      {isFetching ? (
+        <div>Carregando...</div>
+      ) : (
+        <>
+          {!!userInfo && <UserInfo userInfo={userInfo} />}
+          {!!userInfo && (
+            <Actions getRepos={getRepos} getStarred={getStarred} />
+          )}
 
-      {!!repos.length && (
-        <Repos className="repos" title="Repositórios:" repos={repos} />
-      )}
+          {!!repos.length && (
+            <Repos className="repos" title="Repositórios:" repos={repos} />
+          )}
 
-      {!!starred.length && (
-        <Repos className="starred" title="Favoritos:" repos={starred} />
+          {!!starred.length && (
+            <Repos className="starred" title="Favoritos:" repos={starred} />
+          )}
+        </>
       )}
     </div>
   );
