@@ -58,16 +58,12 @@ class Home extends Component {
   };
 
   render() {
-    const { userInfo, repos, starred, isFetching } = this.state;
     return (
       <Content
-        userInfo={userInfo}
-        repos={repos}
-        starred={starred}
+        {...this.state}
         handleSearch={this.handleSearch}
         getRepos={() => this.handleGetRepos("repos")}
         getStarred={() => this.handleGetRepos("starred")}
-        isFetching={isFetching}
       />
     );
   }
