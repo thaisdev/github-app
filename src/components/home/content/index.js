@@ -22,9 +22,11 @@ const Content = ({
         <div>Carregando...</div>
       ) : (
         <>
-          {!!userInfo && <UserInfo userInfo={userInfo} />}
           {!!userInfo && (
-            <Actions getRepos={getRepos} getStarred={getStarred} />
+            <>
+              <UserInfo userInfo={userInfo} />
+              <Actions getRepos={getRepos} getStarred={getStarred} />
+            </>
           )}
 
           {!!repos.length && (
@@ -44,6 +46,15 @@ Content.propTypes = {
   userInfo: PropTypes.object,
   repos: PropTypes.array.isRequired,
   starred: PropTypes.array.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  getRepos: PropTypes.func.isRequired,
+  getStarred: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool,
+};
+
+Content.defaultProps = {
+  userInfo: null,
+  isFetching: false,
 };
 
 export default Content;

@@ -16,14 +16,15 @@ const Repos = ({ className, title, repos }) => {
   );
 };
 
-Repos.defaultProps = {
-  className: "",
-};
-
 Repos.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string.isRequired,
   repos: PropTypes.array,
+};
+
+Repos.defaultProps = {
+  className: "",
+  repos: [],
 };
 
 export default Repos;
